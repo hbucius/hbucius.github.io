@@ -77,7 +77,7 @@ metamacro_foreach_cxt2(MACRO, SEP, CONTEXT, __VA_ARGS__)
 
 后面可以看出，此宏的唯一作用是进行metamacro_foreach_cxt的展开。
 
-### metamacro_foreach2
+### metamacro_foreach_cxt2
 
 {% highlight c %}
 
