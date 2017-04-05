@@ -47,7 +47,7 @@ published: true
 可以看到此宏并没有具体的含义，只是为了让使用者在weakify加上@，变为@weakify，这样它就更像一个关键字了。区分是否Debug的原因：
 - autoreleasePoll {} 缺点是编译器不会优化，增加了额外的负担，好处是对如果一个block需要return，但是使用者却没有return，是可以报warning的
 
--try/@catch/@finally{} 缺点是对于block的return的识别会被抑制，好处是不会增加编译器的负担。
+- try/@catch/@finally{} 缺点是对于block的return的识别会被抑制，好处是不会增加编译器的负担。
 
 所以在debug状态，和非debug状态，使用了不同的关键字。潜在的风险就是如果使用者在非debug状态下编码，block的return 不会报warning
 
