@@ -182,7 +182,7 @@ metamacro_at是得到可变参数的第N个，metamacro_argcount的实现非常�
 
 {% highlight c %}
  @weakify(self) // 相当于__weak id weakSelf = self;
- @strongify(self) //相当于 id self = weakSelf;
+ @strongify(self) // 相当于id self = weakSelf;
 {% endhighlight %}
 
 这个和我们平时的用法一致，深究一下，为啥这种用法可以在block中防止循环引用呢？ 
