@@ -181,7 +181,7 @@ metamacro_at是得到可变参数的第N个，metamacro_argcount的实现非常�
 ###  预编译后的结果
 
 {% highlight c %}
- @weakify(self) // 相当于__weak id weakSelf = self; 
+ @weakify(self) // 相当于__weak id weakSelf = self;
  @strongify(self) //相当于 id self = weakSelf;
 {% endhighlight %}
 
