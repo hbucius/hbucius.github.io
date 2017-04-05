@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 本文主要谈论关于这两个宏使用的三个问题：
 
@@ -10,5 +10,9 @@ published: false
 
 ## block嵌套
 
+
+## 捕获的对象已经dealloc
+
+## 使用weakify开发时，一定要使用Debug模式
 
 
