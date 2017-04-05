@@ -178,4 +178,74 @@ __weak __typeof_(VAR) VAR__weak_ = VAR
 
 metamacro_at是得到可变参数的第N个，metamacro_argcount的实现非常巧妙，metamacro_at的实现也是通过展开式的方式，得到可变参数的第一个来实现的
 
-到此本文结束
+###  预编译后的结果
+
+{% highlight c %}
+ @weakify(self) // 相当于__weak id weakSelf = self; 
+ @strongify(self) //相当于 id self = weakSelf;
+{% endhighlight %}
+
+这个和我们平时的用法一致，深究一下，为啥这种用法可以在block中防止循环引用呢？ 
+
+换言之，我们通常说block通过捕获变量对变量进行持有，对weak变量的捕获会变为strong么? 对此我进行了实验
+
+{% highlight oc %}
+
+@interface A ()
+
+@property (nonatomic, strong) void (^block)(void);
+
+@end
+
+@implementation A
+
+- (void)func1
+{
+    __weak A *weakSelf = self;
+    self.block = ^{
+        NSLog(@"%@", self.description);
+    };
+}
+
+{% endhighlight %}
+
+编译为C ++语言： clang -rewrite-objc -fobjc-arc -stdlib=libc++ -mmacosx-version-min=10.7 -fobjc-runtime=macosx-10.7 -Wno-deprecated-declarations A.m
+
+{% highlight oc %}
+
+struct __A__func1_block_impl_0 {
+  struct __block_impl impl;
+  struct __A__func1_block_desc_0* Desc;
+  A *const __strong self;
+  __A__func1_block_impl_0(void *fp, struct __A__func1_block_desc_0 *desc, A *const __strong _self, int flags=0) : self(_self) {
+    impl.isa = &_NSConcreteStackBlock;
+    impl.Flags = flags;
+    impl.FuncPtr = fp;
+    Desc = desc;
+  }
+};
+{% endhighlight %}
+
+
+可以看到__A__func1_block_impl_0对应的block对self的捕获属性是strong的
+
+将func1中的self.description变为weakSelf.description,再重新编译为C++语言：
+
+{% highlight oc %}
+
+struct __A__func1_block_impl_0 {
+  struct __block_impl impl;
+  struct __A__func1_block_desc_0* Desc;
+  A *__weak weakSelf;
+  __A__func1_block_impl_0(void *fp, struct __A__func1_block_desc_0 *desc, A *__weak _weakSelf, int flags=0) : weakSelf(_weakSelf) {
+    impl.isa = &_NSConcreteStackBlock;
+    impl.Flags = flags;
+    impl.FuncPtr = fp;
+    Desc = desc;
+  }
+};
+{% endhighlight %}
+
+可以看到随之对self的捕获变为了self，由此认为block对变量进行捕获时，本身是需要看该变量的ownership Attribute的
+
+本文至此结束
