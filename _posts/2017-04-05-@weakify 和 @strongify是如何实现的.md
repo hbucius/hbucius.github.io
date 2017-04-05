@@ -50,7 +50,7 @@ published: true
 
 该宏在库libextobjc中
 
-{ % highlight c}
+{ % highlight c %}
 
 /**
  * For each consecutive variadic argument (up to twenty), MACRO is passed the
@@ -63,23 +63,23 @@ published: true
 #define metamacro_foreach_cxt(MACRO, SEP, CONTEXT, ...) \
         metamacro_concat(metamacro_foreach_cxt, metamacro_argcount(__VA_ARGS__))(MACRO, SEP, CONTEXT, __VA_ARGS__)
 
-{ % endhighlight}
+{ % endhighlight %}
 
 该宏有三个确定参数，N个不定参数，MACRO是一个宏函数，类似于函数指针，SEP，CONTEXT的作用后面可以看到
 
 metamacro_concat的作用的是连接，metamacro_argcount的作用是取得宏的个数，例如如果宏有2个不定参数，则该宏可以编译为：
 
-{% highlight c}
+{% highlight c %}
 
 metamacro_foreach_cxt2(MACRO, SEP, CONTEXT, __VA_ARGS__)
 
-{% endhighlight}
+{% endhighlight %}
 
 后面可以看出，此宏的唯一作用是进行metamacro_foreach_cxt的展开。
 
 ### metamacro_foreach2
 
-{ % highlight c}
+{ % highlight c %}
 
 #define metamacro_foreach_cxt2(MACRO, SEP, CONTEXT, _0, _1) \
     metamacro_foreach_cxt1(MACRO, SEP, CONTEXT, _0) \
@@ -88,7 +88,7 @@ metamacro_foreach_cxt2(MACRO, SEP, CONTEXT, __VA_ARGS__)
    
 #define metamacro_foreach_cxt1(MACRO, SEP, CONTEXT, _0) MACRO(0, CONTEXT, _0)
 
-{ % endhighlight}
+{ % endhighlight %}
 
 metamacro_foreach_cxt1的作用是在只有一个确定的参数的情况下，将参数传递个MACRO宏，metamacro_foreach_cxt2的定义类似于迭代，即首先执行metamacro_foreach_cxt1，再将第二个参数传递给宏执行，这样相当于第一个参数(_0),第二个参数(_1)，都相继传递给了MACRO 执行。
 
@@ -99,12 +99,12 @@ metamacro_foreach_cxt1的作用是在只有一个确定的参数的情况下，�
 
 该宏是weakify的核心
 
-{ % highlight c}
+{ % highlight c %}
 
 #define rac_weakify_(INDEX, CONTEXT, VAR) \
     CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
 
-{ % endhighligh}
+{ % endhighligh %}
 
 该宏函数有三个参数，第一个是index索引，第二个CONTEXT是规定__weak引用的，var是具体的需要weakify的变量，展开就是
 
@@ -114,12 +114,12 @@ __weak __typeof_(VAR) VAR__weak_ = VAR
 
 该宏是strongify的核心
 
-{ % highlight c}
+{ % highlight c %}
 
 #define rac_strongify_(INDEX, VAR) \
     __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
 
-{ % endhighligh}
+{ % endhighligh %}
 
 展开为 __strong __typeof_(VAR) VAR = VAR_weak_
 
@@ -129,21 +129,21 @@ __weak __typeof_(VAR) VAR__weak_ = VAR
 
 ### metamacro_concat
 
-{ % highlight c}
+{ % highlight c %}
 
 #define metamacro_concat(A, B) \
         metamacro_concat_(A, B)
      
 #define metamacro_concat_(A, B) A ## B
 
-{ % endhighligh}
+{ % endhighligh %}
 
 ##即宏连接符，将A，B两个宏拼接在一起。
 
 ###  metamacro_argcount
 
 
-{ % highlight c}
+{ % highlight c %}
 
 /**
  * Returns the number of arguments (up to twenty) provided to the macro. At
@@ -169,7 +169,7 @@ __weak __typeof_(VAR) VAR__weak_ = VAR
 #define metamacro_at1(_0, ...) metamacro_head(__VA_ARGS__)
 #define metamacro_at2(_0, _1, ...) metamacro_head(__VA_ARGS__)
 
-{ % endhighligh}
+{ % endhighligh %}
 
 metamacro_at是得到可变参数的第N个，metamacro_argcount的实现非常巧妙，metamacro_at的实现也是通过展开式的方式，得到可变参数的第一个来实现的
 
