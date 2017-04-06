@@ -21,7 +21,7 @@ published: true
         @strongify(self);
         [self doSomething];
         nestedBlock = ^{   
-          @strongify(self);		// 嵌套的block不再使用weakify，然而再次使用strongify
+          @strongify(self);	// 嵌套的block不再使用weakify，然而再次使用strongify
           [self doSomethingElse];
         }();
       };
@@ -36,7 +36,7 @@ published: true
       id block = ^{
         @strongify(self);
         [self doSomething];
-        @weakify(self)         // 嵌套的block再次使用weakify和strongify
+        @weakify(self); // 嵌套的block再次使用weakify和strongify
         nestedBlock = ^{
           @strongify(self);
           [self doSomethingElse];
@@ -53,7 +53,7 @@ published: true
       id block = ^{
         @strongify(self);
         [self doSomething];
-        nestedBlock = ^{  			//嵌套的block不再使用weakify和strongify
+        nestedBlock = ^{ //嵌套的block不再使用weakify和strongify
           [self doSomethingElse];
         }();
       };
