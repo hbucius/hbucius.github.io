@@ -103,6 +103,19 @@ published: true
 
 ## 捕获的对象已经dealloc
 
-在某些情况下，block捕获的weak变量已经变为nil，此时block是没有必要再执行下去的，在项目中，我们可
+在某些情况下，block捕获的weak变量已经变为nil，此时block是没有必要再执行下去的，在项目中，我们可以增加宏定义：
+
+{% highlight c %}
+#define strongify_return_if_nil(VAR, ...) strongify(VAR); if (VAR == nil) { return __VA_ARGS__; }
+{% endhighlight %}
+
+该宏判断参数是否变为了nil，如果是nil的话，则返回，使用__VA_ARGS__是为了兼容有返回值的block，缺陷是此宏只能一次只能创建一个指向weak_VAR的变量了，大多数情况下还是不存在任何问题的。
 
 ## 使用weakify开发时，一定要使用Debug模式
+weakify和strongify的定义用到了宏rac_keywordify，它的缺陷是在非Debug模式下并且恰好该block是有返回值的，try,catch会抑制编译器检查代码的block是否存在返回值的代码，因而存在风险，所以开发者自己需要确保使用Debug模式下进行开发
+{% highlight c %}
+#define rac_keywordify autoreleasepool {}
+#else
+#define rac_keywordify try {} @catch (...) {}
+#endif
+{% endhighlight %}
