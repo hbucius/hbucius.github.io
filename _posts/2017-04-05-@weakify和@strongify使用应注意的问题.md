@@ -100,7 +100,7 @@ published: true
 可以看出nestedBlock不会被立即释放，因而也有了循环引用，self强引用nestedBlock，nestedBlock也强引用self。
 
 综上分析用法1，2，3都没问题，但是用法2中的多次weakify是多余的，用法3 在nestedblock的生命周期延长（或者说是被外面的实例变量引用）的特定情况下，会发生循环引用，用法2是不会存在任何问题的。
-在[stackoverflow][http://stackoverflow.com/questions/28305356/ios-proper-use-of-weakifyself-and-strongifyself] 也讨论了类似的的问题
+在[stackoverflow][stackoverflow] 也讨论了类似的的问题
 
 ## 捕获的对象已经dealloc
 
@@ -122,3 +122,4 @@ weakify和strongify的定义用到了宏rac_keywordify，它的缺陷是在非De
 {% endhighlight %}
 
 [github-issue]: https://github.com/jspahrsummers/libextobjc/issues/45
+[stackoverflow]:http://stackoverflow.com/questions/28305356/ios-proper-use-of-weakifyself-and-strongifyself
