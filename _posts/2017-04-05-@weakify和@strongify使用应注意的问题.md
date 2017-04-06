@@ -11,7 +11,7 @@ published: true
 
 ## block嵌套
 
-如果存在block嵌套的情况，以下哪种用法是对的呢？以下例子来自[github issue][https://github.com/jspahrsummers/libextobjc/issues/45]
+如果存在block嵌套的情况，以下哪种用法是对的呢？以下例子来自[github issue][github-issue]
 
 {% highlight c %}
 //用法1：使用一次weakify，block中多次使用strongify
@@ -120,3 +120,5 @@ weakify和strongify的定义用到了宏rac_keywordify，它的缺陷是在非De
 #define rac_keywordify try {} @catch (...) {}
 #endif
 {% endhighlight %}
+
+[github-issue]: https://github.com/jspahrsummers/libextobjc/issues/45
