@@ -29,7 +29,7 @@ SDWebImageManager是最重要的一个类，它使用SDWebImageDownloader完成�
 
 为了尽可能不重复下载失效图片，使用了failedURLs机制记录过去的失败记录，并且有开关将其关闭；为了尽可能可能cancel掉各种下载，disk 缓存查询等操作，manager使用了runningOperation保存operation时，用户可以取消各项操作
 
-## SDWebImageDownloade
+## SDWebImageDownloader
 
 SDWebImageDownloader的作用很纯粹，就是下载图片，并且执行progress和 completion操作。
 
