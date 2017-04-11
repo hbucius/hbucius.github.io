@@ -36,12 +36,10 @@ SDWebImageDownloader的作用很纯粹，就是下载图片，并且执行progre
 关键函数：
 
 {% highlight c %}
-
 - (id <SDWebImageOperation>)downloadImageWithURL:(NSURL *)url
                                          options:(SDWebImageDownloaderOptions)options
                                         progress:(SDWebImageDownloaderProgressBlock)progressBlock
                                        completed:(SDWebImageDownloaderCompletedBlock)completedBlock;
-                                       
  {% endhighlight %}
 
 该类首先要解决相同图片的下载问题，解决思路是将url作为key，completionBlock和progressBlock作为value保存在
