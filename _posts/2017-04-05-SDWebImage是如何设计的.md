@@ -13,7 +13,7 @@ SDWebImage是iOS常用的图片库,[代码行数3k][cloc], 把玩难度属于简
 
 ## SDWebImageManager
 
-SDWebImageManager是最重要的一个类，它使用SDWebImageDownloader和SDImageCache完成图片的下载和缓存，给使用者提供了直接的接口
+SDWebImageManager是最重要的一个类，它使用SDWebImageDownloader完成图片的下载,使用SDImageCache完成图片的缓存，给使用者提供了直接的接口
 
 关键函数：
 {% highlight c %}
