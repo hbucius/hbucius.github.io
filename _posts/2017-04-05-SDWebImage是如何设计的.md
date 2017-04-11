@@ -23,8 +23,9 @@ SDWebImage是iOS常用的图片库，[代码行数3k][cloc], 把玩难度属于�
 
 {% endhighlight %}
 
-该函数物
+该函数大家应该都比较熟悉，具体的实现比较容易看晕，包含了太多的if else 判断。 主要包含以下方面内容: 首先判断该URL是否包含在failedURLs中，如果包含并且失败不再继续的开关打开，则就直接调用completionBlock了; 读取memory cache的缓存，没用命中则异步读取disk 缓存； 如果没用命中disk缓存，则使用SDWebImageDownloader下载图片; 下载图片使用SDImageCache缓存图片，并调用completionBlock。
 
+为了尽可能不重复下载失效图片，使用了failedURLs机制记录过去的失败记录，并且有开关将其关闭；为了尽可能可能cancel掉各种下载，disk 缓存查询等操作，manager使用了runningOperation保存operation时，用户可以取消各项操作
 
 ## SDWebImageDownloader
 ## SDWebImageDownloaderOperation
