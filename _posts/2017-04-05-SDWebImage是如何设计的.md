@@ -62,7 +62,7 @@ URLCallbacks('字典类型')中，每个url只有在第一次加入到URLCallbac
             
  {% endhighlight %}
  
-该类的入口函数式start, 在该函数中启动request，并设置自己为request的delegate，在回调函数中，调用各种block等，就是该类主要的功能。 需要注意的是对304 not modified的操作，主要在dataDelete的此函数中进行
+该类的入口函数式start, 在该函数中启动request，并设置自己为request的delegate，在回调函数中，调用各种block等，就是该类主要的功能。 需要注意的是对304 not modified的操作，主要在dataDelegate的此函数中进行
 
 {% highlight c %}
  (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
