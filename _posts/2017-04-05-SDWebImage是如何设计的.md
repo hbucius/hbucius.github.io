@@ -140,7 +140,7 @@ URLCallbacks('字典类型')中，每个url只有在第一次加入到URLCallbac
 此类是NSCache的子类，唯一的一个作用就是:在收到'memory warning'的通知时，释放内存
 
 
-此外SDWebImage还提供了两个有用的宏函数
+此外SDWebImage还提供了两个有用的宏函数，用于在主线程安全的执行同步和异步操作
 
 {% highlight c %}
 
