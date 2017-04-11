@@ -45,7 +45,7 @@ SDWebImageDownloader的作用很纯粹，就是下载图片，并且执行progre
 该类首先要解决相同图片的下载问题，解决思路是将url作为key，completionBlock和progressBlock作为value保存在
 URLCallbacks('字典类型')中，每个url只有在第一次加入到URLCallbacks时，才进行下载操作, 下载过程中调用progressBlock数组，完成后调用completionBlock数组
 
-该类不是下载图片的最底层类，它依赖于SDWebImageDownloaderOperation去完成下载操作, 设置request的各种开关，创建downloaderOperation将progressBlock 和 completionBlock传给Operation，加入operationQueue 去完成下载功能
+该类不是下载图片的最底层类，它依赖于SDWebImageDownloaderOperation去完成下载操作, 该类设置request的各种开关，创建downloaderOperation将progressBlock 和 completionBlock传给Operation，加入operationQueue 去完成下载功能
 
 ## SDWebImageDownloaderOperation
 
