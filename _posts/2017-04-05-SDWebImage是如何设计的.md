@@ -1,7 +1,7 @@
 ---
 published: true
 ---
-SDWebImage是iOS常用的图片库，[代码行数3k][cloc], 把玩难度属于简单，下图是SDWebImage比较重要的类关系图，画图工具是亿图。
+SDWebImage是iOS常用的图片库,[代码行数3k][cloc], 把玩难度属于简单，下图是SDWebImage比较重要的类关系图，画图工具是亿图。
 
 ## 主要类的作用
 
