@@ -1,6 +1,5 @@
 ---
 published: false
 ---
-## A New Post
+![SDWebImage类依赖关系]({{site.baseurl}}/_posts/SDWebImage.png)
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
