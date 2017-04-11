@@ -13,6 +13,8 @@ SDWebImage是iOS常用的图片库，[代码行数3k][cloc], 把玩难度属于�
 
 ## SDWebImageManager
 
+SDWebImageManager是最重要的一个类，它使用SDWebImageDownloader和SDImageCache完成图片的下载和缓存，给使用者提供了直接的接口
+
 关键函数：
 {% highlight c %}
 
@@ -27,8 +29,53 @@ SDWebImage是iOS常用的图片库，[代码行数3k][cloc], 把玩难度属于�
 
 为了尽可能不重复下载失效图片，使用了failedURLs机制记录过去的失败记录，并且有开关将其关闭；为了尽可能可能cancel掉各种下载，disk 缓存查询等操作，manager使用了runningOperation保存operation时，用户可以取消各项操作
 
-## SDWebImageDownloader
+## SDWebImageDownloade
+
+SDWebImageDownloader的作用很纯粹，就是下载图片，并且执行progress和 completion操作。
+
+关键函数：
+
+{% highlight c %}
+
+- (id <SDWebImageOperation>)downloadImageWithURL:(NSURL *)url
+                                         options:(SDWebImageDownloaderOptions)options
+                                        progress:(SDWebImageDownloaderProgressBlock)progressBlock
+                                       completed:(SDWebImageDownloaderCompletedBlock)completedBlock;
+                                       
+ {% endhighlight %}
+
+该类首先要解决相同图片的下载问题，解决思路是将url作为key，completionBlock和progressBlock作为value保存在
+URLCallbacks('字典类型')中，每个url只有在第一次加入到URLCallbacks时，才进行下载操作, 下载过程中调用progressBlock数组，完成后调用completionBlock数组
+
+该类不是下载图片的最底层类，它依赖于SDWebImageDownloaderOperation去完成下载操作, 设置request的各种开关，创建downloaderOperation将progressBlock 和 completionBlock传给Operation，加入operationQueue 去完成下载功能
+
 ## SDWebImageDownloaderOperation
+
+该类是下载图片的最底层类，最终由该类完成图片的下载操作，它是NSOperation的子类。 唯一的函数就是下面的初始化函数接收request，block等。 
+
+{% highlight c %}
+
+- (id)initWithRequest:(NSURLRequest *)request
+            inSession:(NSURLSession *)session
+              options:(SDWebImageDownloaderOptions)options
+             progress:(SDWebImageDownloaderProgressBlock)progressBlock
+            completed:(SDWebImageDownloaderCompletedBlock)completedBlock
+            cancelled:(SDWebImageNoParamsBlock)cancelBlock;
+
+                                       
+ {% endhighlight %}
+ 
+该类的入口函数式start, 在该函数中启动request，并设置自己为request的delegate，在回调函数中，调用各种block等，就是该类主要的功能。 需要注意的是对304 not modified的操作，主要在dataDelete的此函数中进行
+
+{% highlight c %}
+ (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+                                 didReceiveResponse:(NSURLResponse *)response
+                                  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler;
+
+ {% endhighlight %}
+ 
+有response，但是还没有收到data，如果此时检查response 的status code 是304，就可以取消剩余的操作，直接调用completionBlockr即可
+
 ## SDImageCache
 此类主要提供图片的内存缓存以及文件缓存。主要方法如下:
 
