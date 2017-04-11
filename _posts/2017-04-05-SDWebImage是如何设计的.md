@@ -12,6 +12,20 @@ SDWebImage是iOS常用的图片库，[代码行数3k][cloc], 把玩难度属于�
 下面简要的对每个类关键实现进行介绍
 
 ## SDWebImageManager
+
+关键函数：
+{% highlight c %}
+
+- (id <SDWebImageOperation>)downloadImageWithURL:(NSURL *)url
+                                         options:(SDWebImageOptions)options
+                                        progress:(SDWebImageDownloaderProgressBlock)progressBlock
+                                       completed:(SDWebImageCompletionWithFinishedBlock)completedBlock;
+
+{% endhighlight %}
+
+该函数物
+
+
 ## SDWebImageDownloader
 ## SDWebImageDownloaderOperation
 ## SDImageCache
@@ -83,5 +97,27 @@ SDWebImage是iOS常用的图片库，[代码行数3k][cloc], 把玩难度属于�
 ## AutoPurgeCache
 此类是NSCache的子类，唯一的一个作用就是:在收到'memory warning'的通知时，释放内存
 
+
+此外SDWebImage还提供了两个有用的宏函数
+
+{% highlight c %}
+
+#define dispatch_main_sync_safe(block)\
+    if ([NSThread isMainThread]) {\
+        block();\
+    } else {\
+        dispatch_sync(dispatch_get_main_queue(), block);\
+    }
+
+#define dispatch_main_async_safe(block)\
+    if ([NSThread isMainThread]) {\
+        block();\
+    } else {\
+        dispatch_async(dispatch_get_main_queue(), block);\
+    }
+
+{% endhighlight %}
+
+本文至此结束
 
 [cloc]:https://github.com/AlDanial/cloc
