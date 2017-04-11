@@ -52,23 +52,20 @@ URLCallbacks('字典类型')中，每个url只有在第一次加入到URLCallbac
 该类是下载图片的最底层类，最终由该类完成图片的下载操作，它是NSOperation的子类。 唯一的函数就是下面的初始化函数接收request，block等。 
 
 {% highlight c %}
-
 - (id)initWithRequest:(NSURLRequest *)request
             inSession:(NSURLSession *)session
               options:(SDWebImageDownloaderOptions)options
              progress:(SDWebImageDownloaderProgressBlock)progressBlock
             completed:(SDWebImageDownloaderCompletedBlock)completedBlock
             cancelled:(SDWebImageNoParamsBlock)cancelBlock;                                      
-            
  {% endhighlight %}
  
 该类的入口函数式start, 在该函数中启动request，并设置自己为request的delegate，在回调函数中，调用各种block等，就是该类主要的功能。 需要注意的是对304 not modified的操作，主要在dataDelegate的此函数中进行
 
 {% highlight c %}
- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
                                  didReceiveResponse:(NSURLResponse *)response
                                   completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler;
-
  {% endhighlight %}
  
 有response，但是还没有收到data，如果此时检查response 的status code 是304，就可以取消剩余的操作，直接调用completionBlockr即可
