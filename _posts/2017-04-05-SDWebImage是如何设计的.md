@@ -7,7 +7,7 @@ SDWebImage是iOS常用的图片库，[代码行数3k][cloc], 把玩难度属于�
 
 从高层级到低层级来说，最上层是UIImageView和UIButton等UIView类的category，负责封装将SDWebImageManager的方法，使用户容易使用。SDWebImageManager是一个关键类，完成了图片的下载和缓存，其中下载依赖于SDWebImageDownloader，缓存依赖于SDImageCache，也包含了一些Options, 例如失败后重新下载，是否只缓存到memory等，类之间的依赖关系比较清晰
 
-[![](https://raw.githubusercontent.com/hbucius/hbucius.github.io/master/_posts/SDWebImage.png "SDWebImage类关系图")][SDWebImage]	
+[![](https://raw.githubusercontent.com/hbucius/hbucius.github.io/master/_posts/SDWebImage.png "SDWebImage类关系图")
 
 下面简要的对每个类关键实现进行介绍
 
