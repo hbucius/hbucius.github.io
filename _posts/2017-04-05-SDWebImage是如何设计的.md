@@ -68,7 +68,7 @@ URLCallbacks('字典类型')中，每个url只有在第一次加入到URLCallbac
                                   completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler;
  {% endhighlight %}
  
-有response，但是还没有收到data，如果此时检查response 的status code 是304，就可以取消剩余的操作，直接调用completionBlockr即可
+该函数回调时，只收到了response，但是还没有收到data，如果此时检查response 的status code 是304，就可以取消剩余的操作，直接调用completionBlockr即可
 
 ## SDImageCache
 此类主要提供图片的内存缓存以及文件缓存。主要方法如下:
