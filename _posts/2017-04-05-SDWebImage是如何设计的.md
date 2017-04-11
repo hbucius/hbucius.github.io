@@ -104,7 +104,7 @@ URLCallbacks('字典类型')中，每个url只有在第一次加入到URLCallbac
 
 {% endhighlight %}
 
-异步从disk cache 获取图片，返回的是Operation, operation唯一的一个作用，就是提供了取消功能
+该函数作用是异步从disk cache 获取图片，返回的是Operation, operation唯一的一个作用，就是提供了取消功能，下面的代码片段是Operation是如何完成可以取消的功能的
 
 {% highlight c %}
   NSOperation *operation = [NSOperation new];
